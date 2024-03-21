@@ -2,35 +2,50 @@ import random
 
 # Lista de palabras posibles
 words = ["python", "programación", "computadora", "código", "desarrollo", "inteligencia"]
-
 # Elegir una palabra al azar
 secret_word = random.choice(words)
 # Número máximo de intentos permitidos
 max_attempts = 10
 # Lista para almacenar las letras adivinadas
 guessed_letters = []
+vocales= ["a","e","i","o","u","á","é","ú","í","ó"]
 
-print("¡Bienvenido al juego de adivinanzas!")
-print("""Elige un nivel de dificultad! 
+menu="4"
+
+while menu not in (["1","2","3"]):
+
+    print("¡Bienvenido al juego de adivinanzas!")
+    print("""Elige un nivel de dificultad! 
     Presiona [1] para FACIL  
     Presiona [2] para MEDIO
     Presiona [3] para DIFICIL""")
 
-menu = input ()
+    menu = input ()
 
-print("Estoy pensando en una palabra. ¿Puedes adivinar cuál es?")
-letters = []
+    if menu == "1": 
+        guessed_letters.extend (vocales)
 
-if menu == "1": 
-    guessed_letters.extend (["a","e","i","o","u"])
-    for char in secret_word:
-        if char in guessed_letters:
-            letters.append(char)
-        else:
-            letters.append("_")  
+    elif menu == "2":
+        guessed_letters.append(secret_word[0]) 
+        guessed_letters.append (secret_word[-1])
+
+    elif menu == "3":
+        word_displayed= "-" * len(secret_word)
+
+    else: 
+        print ("Debe ingresar una opcion valida.")
+    
+letters= []
+for char in secret_word:
+    if char in guessed_letters:
+        letters.append(char)
+    else:
+        letters.append("_")  
 
 word_displayed = "".join(letters)
 
+print("Estoy pensando en una palabra. ¿Puedes adivinar cuál es?")
+letters = []
 
 # Mostrar la palabra parcialmente adivinada
 print(f"Palabra: {word_displayed}")
@@ -48,7 +63,7 @@ while fallos<max_attempts:
 
      # Verificar si la letra ya ha sido adivinada
     if letter in guessed_letters:
-        print("Esa letra ya esta! Intenta con otra.")
+        print("Esa letra ya la usaste! Intenta con otra.")
         continue
 
     # Agregar la letra a la lista de letras adivinadas
