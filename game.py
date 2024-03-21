@@ -11,9 +11,27 @@ max_attempts = 10
 guessed_letters = []
 
 print("¡Bienvenido al juego de adivinanzas!")
-print("Estoy pensando en una palabra. ¿Puedes adivinar cuál es?")
+print("""Elige un nivel de dificultad! 
+    Presiona [1] para FACIL  
+    Presiona [2] para MEDIO
+    Presiona [3] para DIFICIL""")
 
-word_displayed = "_" * len(secret_word)
+menu = input ()
+
+print("Estoy pensando en una palabra. ¿Puedes adivinar cuál es?")
+letters = []
+
+if menu == "1": 
+    guessed_letters.extend (["a","e","i","o","u"])
+    for char in secret_word:
+        if char in guessed_letters:
+            letters.append(char)
+        else:
+            letters.append("_")  
+
+word_displayed = "".join(letters)
+
+
 # Mostrar la palabra parcialmente adivinada
 print(f"Palabra: {word_displayed}")
 
@@ -30,7 +48,7 @@ while fallos<max_attempts:
 
      # Verificar si la letra ya ha sido adivinada
     if letter in guessed_letters:
-        print("Ya has intentado con esa letra. Intenta con otra.")
+        print("Esa letra ya esta! Intenta con otra.")
         continue
 
     # Agregar la letra a la lista de letras adivinadas
