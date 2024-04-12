@@ -8,23 +8,14 @@ def generate_structure (names:str, goals:tuple, goals_avoided:tuple, assists:tup
   assists (tuple): Una lista de enteros que representa la cantidad de asistencias realizadas por cada jugador.
 
   Returns:
-  dict: Un diccionario donde las claves son los nombres de los jugadores y los valores son diccionarios
+  players_info(dict): Un diccionario donde las claves son los nombres de los jugadores y los valores son diccionarios
   con la información de cada jugador, incluyendo 'Goles', 'Goles evitados' y 'Asistencias'.
   """
 
-  special_characters = (' ', "'", '\n')
+  names= tuple(map(lambda name:  name.strip() , names.split(',')))
+  combined_data = tuple(zip(names, goals, goals_avoided, assists))
+  players_info = dict(map(lambda data: (data[0], {'Goles': data[1], 'Goles evitados': data[2], 'Asistencias': data[3]}), combined_data))
 
-  for character in special_characters:
-    if character in names:
-      names=names.replace (character,'')
-  
-  names= names.split (',')
-
-  players_info = {}
-  for i, player in enumerate(names):
-    players_info[player] = {'Goles': goals[i] , 
-                            'Goles evitados': goals_avoided [i], 
-                            'Asistencias': assists[i]}
   return players_info
 
 def getgoleador (structure:dict):
@@ -32,17 +23,13 @@ def getgoleador (structure:dict):
   Parameters:
   structure (dict): estructura con los jugadores y sus respectivos goles.
   Returns:
-  str: Nombre del jugador con más goles.
+  goleador (str): Nombre del jugador con más goles.
+  maxgoles (int): Numero maximo de goles.
   """
 
-  maxgoles=0
-  goleador =""
-  for jugador,info in structure.items():
-    goles= info.get ('Goles')
-    if goles>maxgoles:
-      maxgoles=goles
-      goleador=jugador
-  
+  maxgoleador= max(structure.items(), key= lambda elem: elem[1]['Goles'])
+  goleador= maxgoleador[0] 
+  maxgoles= maxgoleador[1]['Goles']
   return goleador, maxgoles 
 
 def getmip (structure:dict):
@@ -57,7 +44,7 @@ def getmip (structure:dict):
   mip = ""
   for jugador,info in structure.items():
     points= info.get ('Goles') * 1.5 +  info.get ('Goles evitados') * 1.25 + info.get ('Asistencias')
-    if points> maxpoints:
+    if points> maxpoints: 
       maxpoints=points
       mip=jugador
   
