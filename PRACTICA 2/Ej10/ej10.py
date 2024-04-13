@@ -13,14 +13,10 @@ from functions import generate_structure
 
 players=generate_structure(names,goals,goals_avoided,assists)
 
-print ()
-
-
 #INCISO 2
 from functions import getgoleador
 goleador=getgoleador(players)
 print (f"El/la goleador/a fue {goleador[0]} con {goleador[1]} goles")
-
 
 #INCISO 3
 from functions import getmip
