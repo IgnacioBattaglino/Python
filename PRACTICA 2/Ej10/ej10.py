@@ -13,8 +13,6 @@ from functions import generate_structure
 
 players=generate_structure(names,goals,goals_avoided,assists)
 
-print ()
-
 #INCISO 2
 from functions import getgoleador
 goleador=getgoleador(players)
